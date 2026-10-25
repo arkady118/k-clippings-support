@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2ec">
+  <meta name="description" content="K-Clippings for Mac support, Kindle clippings guide, and privacy information.">
+  <link rel="icon" type="image/png" href="k-clippings-icon.png">
+  <title>K-Clippings — Kindle Clippings & Support</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #262a25;
+      --muted: #74786f;
+      --paper: #f5f2ec;
+      --card: #fffefa;
+      --green: #315c43;
+      --green-dark: #244632;
+      --line: #e5e1d8;
+      --soft: #eaf0e8;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--green); }
+    .wrap { width: min(1000px, calc(100% - 44px)); margin: 0 auto; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 23px 0; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; font-weight: 680; letter-spacing: -.025em; }
+    .mark { display: block; width: 35px; height: 35px; border-radius: 10px; object-fit: cover; }
+    nav { display: flex; gap: 24px; font-size: 13px; }
+    nav a { color: var(--muted); text-decoration: none; }
+    nav a:hover { color: var(--green); }
+    .hero { position: relative; overflow: hidden; margin: 25px 0 65px; padding: clamp(35px, 7vw, 76px); border: 1px solid #e7e2d8; border-radius: 23px; background: var(--card); }
+    .hero:after { content: "“ ”"; position: absolute; right: 6%; bottom: -94px; color: #eff1e9; font-family: var(--serif); font-size: 290px; line-height: 1; pointer-events: none; }
+    .hero-content { position: relative; z-index: 1; max-width: 680px; }
+    .eyebrow { color: var(--green); font-size: 11px; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 12px 0 14px; font-family: var(--serif); font-size: clamp(39px, 7vw, 70px); font-weight: 500; line-height: 1.1; letter-spacing: -.055em; }
+    .intro { max-width: 610px; margin: 0; color: var(--muted); font-size: 17px; }
+    .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 27px; }
+    .button { display: inline-block; padding: 10px 16px; border: 1px solid var(--green); border-radius: 9px; background: var(--green); color: white; text-decoration: none; font-size: 13px; font-weight: 650; }
+    .button:hover { background: var(--green-dark); }
+    .text-link { padding: 9px 5px; font-size: 13px; font-weight: 620; text-decoration: none; }
+    section { scroll-margin-top: 25px; }
+    .section-label { margin-bottom: 7px; color: var(--green); font-size: 11px; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+    h2 { margin: 0 0 21px; font-family: var(--serif); font-size: clamp(27px, 4vw, 36px); font-weight: 500; line-height: 1.25; letter-spacing: -.04em; }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .feature { min-height: 166px; padding: 22px; border: 1px solid var(--line); border-radius: 15px; background: var(--card); }
+    .feature-icon { color: var(--green); font-size: 18px; }
+    h3 { margin: 9px 0 5px; font-size: 15px; }
+    .feature p, .step p, .faq p { margin: 0; color: var(--muted); font-size: 13px; }
+    .guide { margin-top: 67px; }
+    .guide-intro { margin: -12px 0 20px; color: var(--muted); font-size: 14px; }
+    .steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .step { display: flex; gap: 16px; padding: 22px; border: 1px solid var(--line); border-radius: 15px; background: var(--card); }
+    .num { flex: 0 0 31px; height: 31px; display: grid; place-items: center; border-radius: 50%; background: var(--soft); color: var(--green); font-size: 12px; font-weight: 750; }
+    .step h3 { margin: 0 0 5px; }
+    .note { margin-top: 15px; padding: 16px 19px; border-left: 3px solid #91a891; border-radius: 0 9px 9px 0; background: var(--soft); color: #4e5d4d; font-size: 13px; }
+    .faq { margin-top: 66px; }
+    .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 13px; }
+    .faq article { padding: 20px 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+    .faq h3 { margin-top: 0; }
+    .contact { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 62px 0; padding: 27px 30px; border-radius: 17px; background: #e9eee6; }
+    .contact h2 { margin: 0 0 4px; font-family: inherit; font-size: 20px; font-weight: 680; letter-spacing: -.03em; }
+    .contact p { margin: 0; color: #5e685d; font-size: 13px; }
+    .contact .button { flex: 0 0 auto; }
+    .privacy { padding: 35px 0 54px; border-top: 1px solid var(--line); }
+    .privacy h2 { margin-bottom: 10px; font-size: 29px; }
+    .privacy p { max-width: 790px; margin: 0 0 11px; color: var(--muted); font-size: 13px; }
+    footer { border-top: 1px solid var(--line); padding: 18px 0 27px; color: var(--muted); font-size: 11px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; }
+    @media (max-width: 700px) {
+      .wrap { width: min(100% - 30px, 560px); }
+      nav { gap: 12px; font-size: 12px; }
+      .hero { margin-top: 14px; margin-bottom: 50px; padding: 36px 25px; }
+      .hero:after { right: -20px; bottom: -73px; font-size: 205px; }
+      .features { grid-template-columns: 1fr; }
+      .feature { min-height: 0; }
+      .steps, .faq-grid { grid-template-columns: 1fr; }
+      .guide, .faq { margin-top: 52px; }
+      .contact { align-items: flex-start; flex-direction: column; margin: 50px 0; padding: 23px; }
+      footer .wrap { flex-direction: column; gap: 4px; }
+    }
+    @media (max-width: 420px) {
+      nav { gap: 8px; }
+      nav a { font-size: 11px; }
+      .brand { gap: 8px; font-size: 14px; }
+      .mark { width: 31px; height: 31px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#top" aria-label="K-Clippings support home"><img class="mark" src="k-clippings-icon.png" alt=""><span>K-Clippings</span></a>
+      <nav aria-label="Page navigation">
+        <a href="#guide">Quick Start</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Support</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="title">
+        <div class="hero-content">
+          <div class="eyebrow">Kindle highlights · for Mac</div>
+          <h1>Find your way<br>back to what you read.</h1>
+          <p class="intro">K-Clippings helps you organize your Kindle highlights, notes, thoughts, and bookmarks on your Mac. Import your My Clippings.txt file, browse by book, search and organize with tags and favorites, then export your notes in familiar formats.</p>
+          <div class="hero-links">
+            <a class="button" href="mailto:stanleylbc@foxmail.com?subject=K-Clippings%20Support">Contact Support</a>
+            <a class="text-link" href="#guide">Read the quick start ↓</a>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="features-title">
+        <div class="section-label">Keep what matters</div>
+        <h2 id="features-title">A thoughtful home for your reading notes</h2>
+        <div class="features">
+          <article class="feature"><div class="feature-icon" aria-hidden="true">⌕</div><h3>Bring your clippings together</h3><p>Import Kindle's My Clippings.txt file and browse highlights, notes, thoughts, and bookmarks by book.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">⌘</div><h3>Search, tag, and favorite</h3><p>Find a passage with search, group notes with tags, and keep important excerpts in Favorites.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">↗</div><h3>Export and revisit</h3><p>Export a note or a book as TXT, Markdown, or DOCX. Reading Mode and Reading Insights offer more ways to revisit your collection.</p></article>
+        </div>
+      </section>
+
+      <section class="guide" id="guide" aria-labelledby="guide-title">
+        <div class="section-label">Quick start</div>
+        <h2 id="guide-title">Get started in four steps</h2>
+        <p class="guide-intro">You'll need the plain-text clipping file generated by your Kindle: <code>My Clippings.txt</code>.</p>
+        <div class="steps">
+          <article class="step"><span class="num">01</span><div><h3>Find My Clippings.txt</h3><p>Transfer the file from your Kindle to your Mac. When connected by USB, it is usually in the Kindle's <code>documents</code> folder.</p></div></article>
+          <article class="step"><span class="num">02</span><div><h3>Import the file</h3><p>Open K-Clippings and click “Import Clippings” in the sidebar, or choose “Import My Clippings.txt…” from the menu. Select the file to begin importing.</p></div></article>
+          <article class="step"><span class="num">03</span><div><h3>Browse and organize</h3><p>Choose a book, Favorites, or Tags in the sidebar. Search to find an excerpt. Use an excerpt's action menu to edit it, favorite it, add tags, or export it.</p></div></article>
+          <article class="step"><span class="num">04</span><div><h3>Export or back up</h3><p>Export the current book as TXT, Markdown, or DOCX. K-Clippings backs up the source clipping file during import; you can also back up the database from the app menu.</p></div></article>
+        </div>
+        <div class="note"><strong>Tip:</strong> If you import the same file again, duplicate excerpts are skipped. If an import fails, make sure you selected a readable <code>My Clippings.txt</code> file. When contacting support, include your macOS version and the steps that reproduce the issue.</div>
+      </section>
+
+      <section class="faq" id="faq" aria-labelledby="faq-title">
+        <div class="section-label">Need a hand?</div>
+        <h2 id="faq-title">Frequently asked questions</h2>
+        <div class="faq-grid">
+          <article><h3>Where can I find My Clippings.txt?</h3><p>Connect your Kindle to your Mac with USB and look in the device's <code>documents</code> folder. The location may vary by device or transfer method.</p></article>
+          <article><h3>Will importing the same file create duplicates?</h3><p>K-Clippings skips excerpts that are already in your library. When the import finishes, the app shows how many items were added and skipped.</p></article>
+          <article><h3>How do I export my excerpts?</h3><p>Use an excerpt's action menu to export one note, or use the menu to export the current book. Available formats are TXT, Markdown, and DOCX.</p></article>
+          <article><h3>Which languages are supported?</h3><p>K-Clippings has Simplified Chinese and English interfaces. You can switch languages in Preferences.</p></article>
+        </div>
+      </section>
+
+      <section class="contact" id="contact" aria-labelledby="contact-title">
+        <div><h2 id="contact-title">Questions or suggestions?</h2><p>Email <a href="mailto:stanleylbc@foxmail.com">stanleylbc@foxmail.com</a>. Include your macOS version and steps to reproduce a problem so we can investigate more quickly.</p></div>
+        <a class="button" href="mailto:stanleylbc@foxmail.com?subject=K-Clippings%20Support">Email Support</a>
+      </section>
+
+      <section class="privacy" id="privacy" aria-labelledby="privacy-title">
+        <div class="section-label">Privacy</div>
+        <h2 id="privacy-title">Privacy information</h2>
+        <p>K-Clippings processes imported clippings on your Mac and stores your books, excerpts, tags, and favorites in the app's local data. The current app does not require an account and does not include a feature that uploads this content to the developer's servers.</p>
+        <p>When you import a file, K-Clippings saves a backup of the source file locally. You initiate database backups and exports in the app and choose where to save them. If you contact support by email, the information in your message is sent to the developer so we can respond and help resolve the issue.</p>
+        <p>For privacy questions, contact <a href="mailto:stanleylbc@foxmail.com">stanleylbc@foxmail.com</a>.</p>
+        <p><small>This information describes the current version of K-Clippings for Mac. If the app's data practices change, this page and the privacy information in App Store Connect should be updated.</small></p>
+      </section>
+    </main>
+  </div>
+  <footer><div class="wrap"><span>© 2026 K-Clippings · Support</span><a href="#privacy">Privacy</a></div></footer>
+</body>
+</html>

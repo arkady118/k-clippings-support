@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2ec">
+  <meta name="description" content="K-Clippings for Mac 官方技术支持、Kindle 书摘导入指南及隐私说明。">
+  <link rel="icon" type="image/png" href="k-clippings-icon.png">
+  <title>K-Clippings — Kindle 书摘管理与技术支持</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #262a25;
+      --muted: #74786f;
+      --paper: #f5f2ec;
+      --card: #fffefa;
+      --green: #315c43;
+      --green-dark: #244632;
+      --line: #e5e1d8;
+      --soft: #eaf0e8;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--green); }
+    .wrap { width: min(1000px, calc(100% - 44px)); margin: 0 auto; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 23px 0; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; font-weight: 680; letter-spacing: -.025em; }
+    .mark { display: block; width: 35px; height: 35px; border-radius: 10px; object-fit: cover; }
+    nav { display: flex; gap: 24px; font-size: 13px; }
+    nav a { color: var(--muted); text-decoration: none; }
+    nav a:hover { color: var(--green); }
+    .hero { position: relative; overflow: hidden; margin: 25px 0 65px; padding: clamp(35px, 7vw, 76px); border: 1px solid #e7e2d8; border-radius: 23px; background: var(--card); }
+    .hero:after { content: "“ ”"; position: absolute; right: 6%; bottom: -94px; color: #eff1e9; font-family: var(--serif); font-size: 290px; line-height: 1; pointer-events: none; }
+    .hero-content { position: relative; z-index: 1; max-width: 640px; }
+    .eyebrow { color: var(--green); font-size: 11px; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 12px 0 14px; font-family: var(--serif); font-size: clamp(39px, 7vw, 70px); font-weight: 500; line-height: 1.1; letter-spacing: -.055em; }
+    .intro { max-width: 575px; margin: 0; color: var(--muted); font-size: 17px; }
+    .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 27px; }
+    .button { display: inline-block; padding: 10px 16px; border: 1px solid var(--green); border-radius: 9px; background: var(--green); color: white; text-decoration: none; font-size: 13px; font-weight: 650; }
+    .button:hover { background: var(--green-dark); }
+    .text-link { padding: 9px 5px; font-size: 13px; font-weight: 620; text-decoration: none; }
+    section { scroll-margin-top: 25px; }
+    .section-label { margin-bottom: 7px; color: var(--green); font-size: 11px; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+    h2 { margin: 0 0 21px; font-family: var(--serif); font-size: clamp(27px, 4vw, 36px); font-weight: 500; line-height: 1.25; letter-spacing: -.04em; }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .feature { min-height: 166px; padding: 22px; border: 1px solid var(--line); border-radius: 15px; background: var(--card); }
+    .feature-icon { color: var(--green); font-size: 18px; }
+    h3 { margin: 9px 0 5px; font-size: 15px; }
+    .feature p, .step p, .faq p { margin: 0; color: var(--muted); font-size: 13px; }
+    .guide { margin-top: 67px; }
+    .guide-intro { margin: -12px 0 20px; color: var(--muted); font-size: 14px; }
+    .steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .step { display: flex; gap: 16px; padding: 22px; border: 1px solid var(--line); border-radius: 15px; background: var(--card); }
+    .num { flex: 0 0 31px; height: 31px; display: grid; place-items: center; border-radius: 50%; background: var(--soft); color: var(--green); font-size: 12px; font-weight: 750; }
+    .step h3 { margin: 0 0 5px; }
+    .note { margin-top: 15px; padding: 16px 19px; border-left: 3px solid #91a891; border-radius: 0 9px 9px 0; background: var(--soft); color: #4e5d4d; font-size: 13px; }
+    .faq { margin-top: 66px; }
+    .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 13px; }
+    .faq article { padding: 20px 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+    .faq h3 { margin-top: 0; }
+    .contact { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 62px 0; padding: 27px 30px; border-radius: 17px; background: #e9eee6; }
+    .contact h2 { margin: 0 0 4px; font-family: inherit; font-size: 20px; font-weight: 680; letter-spacing: -.03em; }
+    .contact p { margin: 0; color: #5e685d; font-size: 13px; }
+    .contact .button { flex: 0 0 auto; }
+    .privacy { padding: 35px 0 54px; border-top: 1px solid var(--line); }
+    .privacy h2 { margin-bottom: 10px; font-size: 29px; }
+    .privacy p { max-width: 790px; margin: 0 0 11px; color: var(--muted); font-size: 13px; }
+    footer { border-top: 1px solid var(--line); padding: 18px 0 27px; color: var(--muted); font-size: 11px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; }
+    @media (max-width: 700px) {
+      .wrap { width: min(100% - 30px, 560px); }
+      nav { gap: 12px; font-size: 12px; }
+      .hero { margin-top: 14px; margin-bottom: 50px; padding: 36px 25px; }
+      .hero:after { right: -20px; bottom: -73px; font-size: 205px; }
+      .features { grid-template-columns: 1fr; }
+      .feature { min-height: 0; }
+      .steps, .faq-grid { grid-template-columns: 1fr; }
+      .guide, .faq { margin-top: 52px; }
+      .contact { align-items: flex-start; flex-direction: column; margin: 50px 0; padding: 23px; }
+      footer .wrap { flex-direction: column; gap: 4px; }
+    }
+    @media (max-width: 420px) {
+      nav { gap: 8px; }
+      nav a { font-size: 11px; }
+      .brand { gap: 8px; font-size: 14px; }
+      .mark { width: 31px; height: 31px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#top" aria-label="K-Clippings 支持首页"><img class="mark" src="k-clippings-icon.png" alt=""><span>K-Clippings</span></a>
+      <nav aria-label="页面导航">
+        <a href="#guide">使用指南</a>
+        <a href="#faq">常见问题</a>
+        <a href="#contact">联系支持</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="title">
+        <div class="hero-content">
+          <div class="eyebrow">Kindle highlights · for Mac</div>
+          <h1 id="title">把读过的，<br>重新找回来。</h1>
+          <p class="intro">K-Clippings 帮你在 Mac 上整理 Kindle 书摘、标注、笔记和书签。导入 My Clippings.txt，按书籍浏览、搜索、添加标签与收藏，也可以导出为常用文档格式。</p>
+          <div class="hero-links">
+            <a class="button" href="mailto:stanleylbc@foxmail.com?subject=K-Clippings%20%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81">联系技术支持</a>
+            <a class="text-link" href="#guide">查看使用指南 ↓</a>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="features-title">
+        <div class="section-label">Keep what matters</div>
+        <h2 id="features-title">为阅读留下线索</h2>
+        <div class="features">
+          <article class="feature"><div class="feature-icon" aria-hidden="true">⌕</div><h3>集中管理书摘</h3><p>从 Kindle 的 My Clippings.txt 导入内容，按书籍查看标注、笔记、想法和书签。</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">⌘</div><h3>搜索、标签与收藏</h3><p>快速搜索内容，用标签归类，并把重要摘录加入收藏，之后更容易找回。</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">↗</div><h3>导出与回顾</h3><p>将单条摘录或当前书籍导出为 TXT、Markdown 或 DOCX；也可使用阅读模式与统计洞察回顾内容。</p></article>
+        </div>
+      </section>
+
+      <section class="guide" id="guide" aria-labelledby="guide-title">
+        <div class="section-label">Quick start</div>
+        <h2 id="guide-title">三步开始使用</h2>
+        <p class="guide-intro">你需要 Kindle 生成的纯文本剪贴文件：<code>My Clippings.txt</code>。</p>
+        <div class="steps">
+          <article class="step"><span class="num">01</span><div><h3>准备 My Clippings.txt</h3><p>将 Kindle 中的书摘文件传到 Mac。通常可通过 USB 连接 Kindle，在设备的 documents 文件夹中找到 <code>My Clippings.txt</code>。</p></div></article>
+          <article class="step"><span class="num">02</span><div><h3>导入文件</h3><p>打开 K-Clippings，点击左侧“导入我的剪贴”，或从菜单选择“导入 My Clippings.txt…”，再选中该文件。</p></div></article>
+          <article class="step"><span class="num">03</span><div><h3>浏览和整理</h3><p>从侧边栏选择书籍、我的收藏或标签；使用搜索查找摘录。打开摘录的操作菜单可编辑、标记收藏、添加标签或导出。</p></div></article>
+          <article class="step"><span class="num">04</span><div><h3>导出或备份</h3><p>从菜单导出当前书籍，选择 TXT、Markdown 或 DOCX。导入时应用会备份源剪贴文件；也可使用菜单中的数据库备份功能。</p></div></article>
+        </div>
+        <div class="note"><strong>提示：</strong>再次导入同一文件时，已存在的重复摘录会被跳过。若导入失败，请确认所选文件是可读取的 <code>My Clippings.txt</code>，并在邮件中附上 macOS 版本和问题步骤。</div>
+      </section>
+
+      <section class="faq" id="faq" aria-labelledby="faq-title">
+        <div class="section-label">Need a hand?</div>
+        <h2 id="faq-title">常见问题</h2>
+        <div class="faq-grid">
+          <article><h3>找不到 My Clippings.txt？</h3><p>用 USB 将 Kindle 连接到 Mac，在 Kindle 设备的 documents 文件夹中查找。文件位置也可能因设备或传输方式而异。</p></article>
+          <article><h3>重复内容会被导入多次吗？</h3><p>应用会识别已存在的书籍摘录，重复记录会跳过；导入完成后会显示新增和跳过的数量。</p></article>
+          <article><h3>如何导出摘录？</h3><p>在摘录的操作菜单中导出单条内容，或从菜单导出当前书籍；格式可选 TXT、Markdown 和 DOCX。</p></article>
+          <article><h3>应用支持哪些语言？</h3><p>K-Clippings 提供简体中文和英文界面，可在偏好设置中切换语言。</p></article>
+        </div>
+      </section>
+
+      <section class="contact" id="contact" aria-labelledby="contact-title">
+        <div><h2 id="contact-title">遇到问题或有建议？</h2><p>请写信至 <a href="mailto:stanleylbc@foxmail.com">stanleylbc@foxmail.com</a>。描述问题、macOS 版本和复现步骤，有助于我们更快定位。</p></div>
+        <a class="button" href="mailto:stanleylbc@foxmail.com?subject=K-Clippings%20%E6%8A%80%E6%9C%AF%E6%94%AF%E6%8C%81">发送邮件</a>
+      </section>
+
+      <section class="privacy" id="privacy" aria-labelledby="privacy-title">
+        <div class="section-label">Privacy</div>
+        <h2 id="privacy-title">隐私说明</h2>
+        <p>K-Clippings 在你的 Mac 上处理导入的书摘，并将书籍、摘录、标签和收藏保存在本机应用数据中。根据当前应用实现，应用不要求注册账号，也没有将这些内容上传至开发者服务器的功能。</p>
+        <p>导入时，应用会在本机保存源文件备份；数据库备份与导出文件由你在应用中发起并选择保存位置。若你主动通过邮件联系支持，邮件内容会发送给开发者用于回复和处理问题。</p>
+        <p>隐私问题或数据处理咨询：<a href="mailto:stanleylbc@foxmail.com">stanleylbc@foxmail.com</a>。</p>
+        <p><small>本说明适用于当前版本 K-Clippings for Mac；如应用的数据处理方式发生变化，请相应更新本说明及 App Store Connect 中的隐私信息。</small></p>
+      </section>
+    </main>
+  </div>
+  <footer><div class="wrap"><span>© 2026 K-Clippings · 技术支持</span><a href="#privacy">隐私说明</a></div></footer>
+</body>
+</html>
